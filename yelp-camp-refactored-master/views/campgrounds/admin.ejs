@@ -1,0 +1,61 @@
+<% include ../partials/header %>
+<style>
+    .approval_button, .denial_button {
+        font-size: 23px;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 2px 5px;
+        text-decoration: none;
+    }
+  
+    .approval_button{
+        background-color: rgb(30, 182, 30);
+    }
+    .approval_button:hover,
+    .approval_button:active{
+    background-color: rgb(37, 231, 37);
+    text-decoration: none;
+    }
+    .denial_button{
+    background-color: rgb(228, 15, 15);
+    }
+    .denial_button:hover,
+    .denial_button:active{
+         background-color: rgb(255, 62, 62);
+         text-decoration: none;
+    }
+
+        
+</style>
+<header class="jumbotron">
+    <div class="container">
+        <h1 style="text-align: center;" ><span class="glyphicon glyphicon-tent"></span> Pending Requests  </h1>
+    </div>
+</header>
+
+
+
+<div class="row text-center flex-wrap" id="campground-grid">
+    <% campgrounds.forEach(function(campground){ %>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <img src="<%= campground.image %>">
+            <div class="caption">
+                <h4><%= campground.name %></h4>
+                <p> By :- <%= campground.author.username %> </p>
+                <input type="hidden" value="<%= campground._id %>" name="campID"> </input>
+            </div>
+               <p>
+                   <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info</a>
+               </p>
+            <p>
+                <a class="approval_button" href="/admin/accept/<%= campground._id %>"> Accept </a>
+               
+                <a class="denial_button" href="/admin/decline/<%= campground._id %>"> Decline </a>
+            </p>
+        </div>
+    </div>
+    <% }); %>
+</div>
+
+<% include ../partials/footer %>

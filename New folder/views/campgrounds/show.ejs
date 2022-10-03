@@ -1,0 +1,107 @@
+
+<% include ../partials/header %>
+
+
+<div class="row">
+  <div class="col-md-3">
+    <p class="lead">YelpCamp</p>
+    <div class="list-group">
+      <li class="list-group-item active">Info 1</li>
+      <li class="list-group-item">Info 2</li>
+      <li class="list-group-item">Info 3</li>
+    </div>
+    <div id="map">
+     <iframe
+       src="<%= campground.location %>" style="width:100%; border:0; height:400px"></iframe>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="thumbnail">
+      <img class="img-responsive" src="<%= campground.image %>">
+      <div class="caption-full">
+        <h4 class="pull-right">
+          $<%= campground.cost %>/night
+        </h4>
+        <h4><a><%=campground.name%></a></h4>
+        <p><%= campground.description %></p>
+
+        <h4 class="pull-right">
+        <fieldset class="rating">
+          <input type="radio" id="star5" name="rating" value="5" onclick="<%= currentUser ? "rateFunction(this, 5)" : "window.location='/login';" %>"
+            <%= rating==5 ? "checked" : "null"%> /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+          <input type="radio" id="star4half" name="rating" value="4 and a half" onclick="<%= currentUser ? "rateFunction(this, 4.5)"   : "window.location='/login';" %>"
+            <%= rating==4.5 ? "checked" : "null"%> /><label class="half" for="star4half"
+            title="Pretty good - 4.5 stars"></label>
+          <input type="radio" id="star4" name="rating" value="4" onclick="<%= currentUser ? "rateFunction(this, 4)  " : "window.location='/login';" %>
+ "           <%= rating==4 ? "checked" : "null"%> /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+          <input type="radio" id="star3half" name="rating" value="3 and a half" onclick="<%= currentUser ? "rateFunction(this, 3.5)"   : "window.location='/login';" %>"
+            <%= rating==3.5 ? "checked" : "null"%> /><label class="half" for="star3half" title="Average - 3.5 stars"></label>
+          <input type="radio" id="star3" name="rating" value="3" onclick="<%= currentUser ? "rateFunction(this, 3)  " : "window.location='/login';" %>
+ "           <%= rating==3 ? "checked" : "null"%> /><label class="full" for="star3" title="Average - 3 stars"></label>
+          <input type="radio" id="star2half" name="rating" value="2 and a half" onclick="<%= currentUser ? "rateFunction(this, 2.5)"   : "window.location='/login';" %>"
+            <%= rating==2.5 ? "checked" : "null"%> /><label class="half" for="star2half" title="Bad - 2.5 stars"></label>
+          <input type="radio" id="star2" name="rating" value="2" onclick="<%= currentUser ? "rateFunction(this, 2)  " : "window.location='/login';" %>
+ "           <%= rating==2 ? "checked" : "null"%> /><label class="full" for="star2" title="Bad - 2 stars"></label>
+          <input type="radio" id="star1half" name="rating" value="1 and a half" onclick="<%= currentUser ? "rateFunction(this, 1.5)"   : "window.location='/login';" %>"
+            <%= rating==1.5 ? "checked" : "null"%> /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+          <input type="radio" id="star1" name="rating" value="1" onclick="<%= currentUser ? "rateFunction(this, 1)  " : "window.location='/login';" %>
+ "           <%= rating==1 ? "checked" : "null"%> /><label class="full" for="star1" title="Poor - 1 star"></label>
+          <input type="radio" id="starhalf" name="rating" value="half" onclick="<%= currentUser ? "rateFunction(this, 0.5)"   : "window.location='/login';" %>"
+            <%= rating==0.5 ? "checked" : "null"%> /><label class="half" for="starhalf" title="Poor - 0.5 stars"></label>
+          <input type="hidden" name="campID" id="campID" value=<%= campground._id%>>
+        </fieldset>
+        </h4>
+      
+      <br>
+            <p>
+              <em>Submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em>
+              <span style="margin-left: 88%; font-weight: bold ; font-size: 75%;" id="avg-rate"> Avg (<%= avgRating%>)</span>
+          </p>
+
+
+
+        <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+        <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+        <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+        
+        <% } %>
+
+       
+
+      </div>
+    </div>
+    <div class="well" style="margin-bottom: 6%;">
+      <div class="text-right">
+        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+      </div>
+      <hr>
+      <% campground.comments.forEach(function(comment){ %>
+      <div class="row">
+        <div class="col-md-12">
+          <strong><%= comment.author.username %></strong>
+          <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+          <div>
+           <%= comment.text %> 
+
+           <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+            <div class="pull-right">
+              <a href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-warning">EDIT</a>
+              <form class="delete-form" action="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-xs btn-danger">DELETE</button>
+              </form>
+              
+            </div>
+          <% } %>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+</div>
+
+<% include ../partials/footer %>
+<script type="text/javascript" src="/scripts/rating.js"></script>

@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "E:\\JavaScript\\Projects"
+		},
+		{
+			"path": "E:\\JavaScript\\NodeJs Express"
+		},
+		{
+			"path": "E:\\JavaScript\\NodeJs BodyParser"
+		},
+		{
+			"path": "E:\\JavaScript\\NodeJs Multer"
+		},
+		{
+			"path": "E:\\JavaScript\\NodeJs PassportJS"
+		},
+		{
+			"path": "E:\\JavaScript\\NodeJsStack"
+		},
+		{
+			"path": "E:\\JavaScript\\E-Commerce Project"
+		},
+		{
+			"path": "E:\\Internship\\Blog"
+		},
+		{
+			"path": "..\\..\\..\\Assignment"
+		},
+		{
+			"path": "E:\\Internship\\Bookings"
+		},
+		{
+			"path": "D:\\WORK\\GItHub\\Blogstrap"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "E:\\React JS\\First App\\first_app"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Projects",
+		"git.ignoreLimitWarning": true
+	}
+}
